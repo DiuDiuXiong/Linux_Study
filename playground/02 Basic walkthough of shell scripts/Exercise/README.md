@@ -1,0 +1,2 @@
+[Questions](../../../shell-scripting-course/shell-scripting-in-a-nutshell/practice-exercises/PracticeExercises-ShellScriptingSuccinctly.pdf)
+[Solutions](../../../shell-scripting-course/shell-scripting-in-a-nutshell/practice-exercises)
