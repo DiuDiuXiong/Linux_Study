@@ -274,3 +274,11 @@ Note that:
 - use `return` to return status code, need to range between  0-255
 - `$$` get the PID to ensure uniqueness
 - basename to get the name of the file without any path
+
+## Part 5 Shell scripts checklist and template
+1. Start with shebang
+2. Start with comments
+3. Global Vars
+4. Functions
+5. Main logic
+6. exit return status
