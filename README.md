@@ -82,3 +82,38 @@ Also use `"$@"` for all positional arguments. Note that path files will not be i
 `read -p "PROMPT" VARIABLE`
 
 [example](./playground/02%20Basic%20walkthough%20of%20shell%20scripts/07_input_read.sh)
+
+## Part 2 Return Codes and Exist Status
+
+Every command returns an exit status, range from 0-255, 0 means success while the rest is some kind of error.
+
+we can use `man <command>` then `/code` to find the documentation of a command for its exit codes.
+
+- `$?` to check exit status of previous command
+  - Can do some check like `if [ "$?" -eq "0" ] then ...`
+- `&&` is and operator, second command won't run if first one failed
+- `||` is or operator, second command will only run if first one failed
+- ` ; ` is same as line change in a sh file. Will run regardless of previous commands
+- `exit <code>` is like return and will stop running rest of bash file. If no exit defined, exit code is last command executed
+
+```bash
+#!/bin/bash
+
+ls /tmp && echo "tmp folder does exist"
+
+ls /tmp || echo "tmp folder does not exist"
+```
+is same as
+
+```bash
+#!/bin/bash
+ls tmp
+
+if [ "$1" -eq 0 ]
+then
+  echo "tmp folder does exist"
+else
+  echo "tmp folder does not exist"
+fi
+```
+Note the check command within `if` statement won't change `$?`, see `if ... fi` as a complete block.
