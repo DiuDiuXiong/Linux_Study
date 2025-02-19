@@ -1,0 +1,1 @@
+[exercise src](../../shell-scripting-course/functions/practice-exercises)

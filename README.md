@@ -117,3 +117,160 @@ else
 fi
 ```
 Note the check command within `if` statement won't change `$?`, see `if ... fi` as a complete block.
+
+## Part X Math Calculations
+use `$((math expressoin))` for match calculation for integer. Its build into shell.
+```bash
+#!/bin/bash
+x=10
+y=5
+
+sum=$((x + y))
+difference=$((x - y))
+product=$((x * y))
+quotient=$((x / y))
+remainder=$((x % y))
+power=$((x ** y))
+
+echo "Sum: $sum"
+echo "Difference: $difference"
+echo "Product: $product"
+echo "Quotient: $quotient"
+echo "Remainder: $remainder"
+echo "Power: $power"
+```
+
+use `let` is another way, need spaces around the operators.
+```bash
+#!/bin/bash
+x=10
+y=5
+
+let "sum=x+y"
+let "difference = x - y"
+let "product = x * y"
+let "quotient = x / y"
+let "remainder = x % y"
+
+echo "Sum: $sum"
+echo "Difference: $difference"
+echo "Product: $product"
+echo "Quotient: $quotient"
+echo "Remainder: $remainder"
+```
+
+use `bc for floating point calculation`
+```bash
+#!/bin/bash
+x=10.5
+y=5.2
+
+sum=$(echo "$x + $y" | bc)
+difference=$(echo "$x - $y" | bc)
+product=$(echo "$x * $y" | bc)
+quotient=$(echo "scale=2; $x / $y" | bc) # scale sets the number of decimal places
+
+echo "Sum: $sum"
+echo "Difference: $difference"
+echo "Product: $product"
+echo "Quotient: $quotient"
+```
+
+Also can use `awk` for floating point calculation.
+
+## Part 3 Functions
+To define, include (), to call, don't include ().
+```bash
+#!/bin/bash
+function greet() {
+  echo "Hello, world"
+}
+greet
+
+greet2() {
+  echo "Hello, world"
+}
+greet2
+```
+
+We can have functions within functions
+```bash
+#!/bin/bash
+outer_function() {
+  inner_function() {
+    echo "This is the inner function."
+    inner_var="Inner variable"
+  }
+  inner_function
+  echo "From outer function: $inner_var"
+}
+
+outer_function
+
+another_outer() {
+    another_inner
+}
+
+another_inner() {
+    echo "This is another inner function."
+}
+
+another_outer
+```
+Note that params are global by default.
+
+To access params, use `$[x|@]`, note that `$0` is still script name, not function name. To call and pass arg, use `function_name arg1 arg2 ...`
+```bash
+#!/bin/bash
+my_function() {
+  echo "Function name: $0"
+  echo "First parameter: $1"
+  echo "Second parameter: $2"
+  echo "All parameters: $@"
+  echo "All parameters (individually):"
+  for param in "$@"; 
+  do
+    echo "$param"
+  done
+  echo "Number of parameters: $#"
+}
+
+my_function "one" "two" "three"
+```
+
+Variables are global by default, and if it is defined within functions, as long as we call it once, it will be accessible from remote.
+To make variables local, use keyword `local`. If local and global conflict, local will replace global within scope of function only. [Example](playground/04%20Functions/variable_scope.sh)
+
+Here's a more complex example:
+```bash
+#!/bin/bash
+backup_file() {
+  if [ ! -f "$1" ]; then
+    echo "Error: $1 is not a file."
+    return 1
+  fi
+
+  filename=$(basename "$1")
+  timestamp=$(date +%Y%m%d%H%M%S)
+  pid=$$
+  backup_filename="$filename.$timestamp.$pid"
+
+  cp "$1" "$backup_filename"
+
+  if [ $? -eq 0 ]; then
+    echo "File '$1' backed up as '$backup_filename'."
+    return 0
+  else
+    echo "Error during backup."
+    return 1
+  fi
+}
+
+# Example usage:
+backup_file "my_document.txt"
+backup_file "not_a_file"
+```
+Note that:
+- use `return` to return status code, need to range between  0-255
+- `$$` get the PID to ensure uniqueness
+- basename to get the name of the file without any path
