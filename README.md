@@ -269,7 +269,7 @@ backup_file() {
 # Example usage:
 backup_file "my_document.txt"
 backup_file "not_a_file"
-```
+```      
 Note that:
 - use `return` to return status code, need to range between  0-255
 - `$$` get the PID to ensure uniqueness
@@ -282,3 +282,16 @@ Note that:
 4. Functions
 5. Main logic
 6. exit return status
+
+## Part 6 Wildcard
+1. Usually work with commands like `cp`, `mv`, `ls`, `rm`
+2. `*` to match zero or more characters, `?` to match exactly one character
+3. `[]` for range, order of char does not matter, `[][]...` for multiple match, `[!...]` for not match, `[a-z][1-2]` for range.
+4. Named character class:
+   - `[[:alpha:]]`
+   - `[[:alnum:]]`
+   - `[[:digit:]]`
+   - `[[:lower:]]`
+   - `[[:space:]]` tab, line break etc...
+   - `[[:upper:]]`
+5. `\<special char>` for escape characters

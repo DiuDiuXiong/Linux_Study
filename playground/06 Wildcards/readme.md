@@ -1,0 +1,1 @@
+[exercise](../../shell-scripting-course/wildcards/practice-exercises)
