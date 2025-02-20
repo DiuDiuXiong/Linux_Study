@@ -415,3 +415,65 @@ Tips for debug
 6. Sometime when files transferred between win/linux, need to use `cat -v <file>` to see un-printable character
    - `file <file>` to check if there are invalid characters
    - `dos2unix <file>` to remove those
+
+## 11 Data manipulation and text transformations with Sed
+Sed -> `Stream editor`
+
+A stream is data that travels from:
+- One process to another process through a pipe
+- One file to another as a redirect
+- One device to another
+
+Standard Input = Standard Input Stream
+
+Streams are typically textual data. Sed can used to edit on them, but it is used programmatically, not interactively.
+
+### `sed 's/word_to_replace/replacement/flags'`
+Use ^ to replace word in stream. E.g.
+```zsh
+echo 'Dwight is the assistant regional manager.' | sed 's/assistant/assistant to the/'
+```
+This is case-sensitive, make flags `i` to make it case insensitive.
+
+```zsh
+echo 'Dwight is the assistant regional manager.' | sed 's/ASSISTANT/assistant to the/i'
+```
+
+- If we pass a text file as input, it will replace every first match on every line. 
+- Use `g` flag for global replace, this will replace every match on every match.
+- `<num>` flag for only x-th one get changed.
+
+### `>`, `>>`
+`>` Will replace, `>>` will append.
+
+### `sed -i.bak`
+This create a backup file for the input file and store the new data there.
+Or
+`sed 's/.../.../gw' <output file> <input file>` 
+
+### Escape  characters
+To match escape characters, use `\<char>`.
+
+### Other space breaker
+`sed 's<separation char><text to replace><separation char><new txt><separation char>`
+
+### Remove content `-d`
+```zsh
+sed '/xxx/d' text.txt
+```
+/d Tells to remove any line that contain the matched pattern string. Note during the match `^` means the beginning of line, `$` means the end of line.
+So `^#` means any line start with #, `^$` means empty line.
+
+### Multiple command
+Can use `sed '/<pattern1> ; <pattern2> ; ...' <input>` for multiple match, each pattern can be a delete, an add, and replace etc...
+
+Can also use `-e` for separation, such as `sed -e '<one pattern>' -e '<another pattern>' -e.... <input file>`
+
+Can also store each pattern in a line of a `.sed` file, then `sed -f <sed command file> <input file>`
+
+### Address (which line to operate)
+`sed '<x> <pattern>' <input file>` to only do match on line <x>
+
+`sed '<x>,<y> <pattern>' <input file>` to only do match on line <x> to <y>
+
+`sed '/<pattern>/,/<another pattern>/,/.../ <operation pattern>' <input file>` to do change only if line match the `<pattern>` or any other patterns.
