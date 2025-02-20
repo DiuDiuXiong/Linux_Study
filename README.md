@@ -336,3 +336,64 @@ To to log, use `logger` command. Default is `user.notice`
 - `logger -t <tag> ...` for tag and for later search
 - `logger -i` to include process id
 - `logger -s` to have logger on screen
+
+## Part 9 While loops
+```bash
+while [ CONDITION_IS_TRUE ]
+do
+  command...
+done
+```
+To terminate infinite loop, ctrl-c or kill process.
+```bash
+while true
+do
+  comand N
+  sleep 1
+done
+```
+
+while loop with index
+```bash
+#!/bin/bash
+INDEX=1
+while [ $INDEX -lt 6 ]
+do
+  ...
+  ((INDEX++))
+done
+```
+
+read file line by line
+
+```bash
+#!/bin/bash
+LINE_NUM=1
+while read LINE
+do
+  echo "${LINE_NUM}: LINE"
+  ((LINE_NUM++))
+done < /etc/fstab
+```
+
+or can use pipe function to pass data to while
+```bash
+#!/bin/bash
+grep xfs /etc/fstab |
+while read LINE
+do
+  echo "xfs: ${LINE}"
+done
+```
+
+can also have multiple feed, its like, read first word, second word, rest of sentence 
+```bash
+#!/bin/bash
+FS_NUM=1
+grep xfs /etc/fstab | whlie read FS MP REST
+do
+  ...
+done
+```
+
+- `break`, `continue` works as other language
