@@ -310,3 +310,29 @@ case "$VAR" in
 esac
 ```
 The wildcard pattern can be used inside case statement. Can use `<pattern1>|<pattern2>|...` for multiple patterns.
+
+## Part 8 Logging
+The syslog standard uses facilities and severities to categorize messages.
+- Facilities:
+  - `kern`
+  - `user`
+  - `mail`
+  - `daemon`
+  - `auth`
+  - `local0` - `local7`
+- Severities
+  - `emerg`
+  - `alert`
+  - `crit`
+  - `err`
+  - `warning`
+  - `notice`
+  - `info`
+  - `debug`
+
+To to log, use `logger` command. Default is `user.notice`
+- `logger "Message"`
+- `logger -p <facilities>.<severity> "Message"`
+- `logger -t <tag> ...` for tag and for later search
+- `logger -i` to include process id
+- `logger -s` to have logger on screen

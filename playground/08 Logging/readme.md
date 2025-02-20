@@ -1,0 +1,1 @@
+[src](../../shell-scripting-course/logging/practice-exercises)
