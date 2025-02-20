@@ -295,3 +295,18 @@ Note that:
    - `[[:space:]]` tab, line break etc...
    - `[[:upper:]]`
 5. `\<special char>` for escape characters
+
+## Part 7 Case Statement
+```bash
+#!/bin/bash
+case "$VAR" in
+  "pattern_1")
+    <command goes here>
+    ;;
+  "pattern_2")
+    <command goes here>
+    ;;
+  ...
+esac
+```
+The wildcard pattern can be used inside case statement. Can use `<pattern1>|<pattern2>|...` for multiple patterns.

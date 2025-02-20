@@ -1,0 +1,1 @@
+[exercise resource](../../shell-scripting-course/case-statements/practice-exercises)
