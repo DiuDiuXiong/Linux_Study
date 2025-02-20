@@ -397,3 +397,21 @@ done
 ```
 
 - `break`, `continue` works as other language
+
+## 10 Debugging your bash programs
+- `#!/bin/bash -x` or `set -x` or `set +x` to stop track. THis will print codes before output
+- `-e exist if some commands have non-zero code`
+- `#!/bin/bash -ex -xe -e -x` to combine with other options
+- `-v` prints shell input lines as they are read, -x will phrase the line before print, -v will print raw line.
+
+Tips for debug
+1. Can have some constant like DEBUG on top of file and behave differently based on that var
+2. Can `DEBUG="echo"` and `$DEBUG <commands>` for all files, if commented out, then it would just work, otherwise will print file.
+3. Can use debug as function and same usage as above that put ahead other variables: `debug() { echo "Executing: $@ ; $@"}`
+4. Use editor with syntax highlighting
+5. define the global var `PS4` to suggest what ahead of `-x`
+   - `PS4='+ $BASH_SOURCE : $LINENO : '`
+   - `PS4=FUNCNAME[0]` <- built in variables
+6. Sometime when files transferred between win/linux, need to use `cat -v <file>` to see un-printable character
+   - `file <file>` to check if there are invalid characters
+   - `dos2unix <file>` to remove those
